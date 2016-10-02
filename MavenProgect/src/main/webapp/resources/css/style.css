@@ -10,3 +10,6 @@ body {
 .navbar .navbar-collapse {
 	text-align: center;
 }
+.navbar-header a.navbar-brand {
+	padding-top: 0px;
+}

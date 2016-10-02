@@ -5,7 +5,7 @@ import org.springframework.web.multipart.MultipartFile;
 public interface FileWriter {
 
 	enum Folder{
-		RECIPE, COUNTRY;
+		PRODUCT;
 	}
 	
 	String write(Folder folder, MultipartFile file, int id);

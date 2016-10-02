@@ -85,10 +85,12 @@
 	</div>
 
 	<div class="col-md-8 col-xs-12">
-		<form:form action="/admin/product" method="post" modelAttribute="form">
+		 <form:form action="/admin/product" method="post" modelAttribute="form" enctype="multipart/form-data">
 			<form:hidden path="id" />
+			<form:hidden path="path" />
+			<form:hidden path="version" />
 			<custom:hiddenInputs
-				excludeParams="country, colour, manufacturer, subcategory, name, cost, id" />
+				excludeParams="country, colour,  path, version, manufacturer, subcategory, name, cost, id" />
 			<div class="form-group">
 				<label for="name"><form:errors path="name" /></label>
 				<form:input path="name" class="form-control" />
@@ -106,7 +108,12 @@
 				<form:select path="subcategory" items="${subcategorys}"
 					itemLabel="name" itemValue="id">
 				</form:select>
-				<button type="submit" class="btn btn-primary">Create</button>
+				<div class="form-group">
+				<label class="btn btn-default btn-file"> Browse <input
+					type="file" name="file" style="display: none;">
+				</label>
+			</div>
+				<button type="submit" class="btn btn-primary">Create Product</button>
 			</div>
 		</form:form>
 
@@ -131,43 +138,25 @@
 					<button type="submit" class="btn btn-primary">Add</button>
 				</div>
 			</div>
-		</form>
+		</form> 
 
-		<div class="row">
-		<br>
-		<br>
-		<br>
-			<div class="col-md-1">Name</div>
-			<div class="col-md-1">Cost</div>
-			<div class="col-md-1">Colour</div>
-			<div class="col-md-2">Manufacturer</div>
-			<div class="col-md-2">Subcategory</div>
-			<div class="col-md-1">Country</div>
-			<div class="col-md-4">
-				<div class="col-md-2"></div>
-				<div class="col-md-2"></div>
-				<div class="col-md-8">Delete size</div>
-			</div>
-		</div>
-<br>
-<br>
 		<c:forEach items="${page.content}" var="product">
-			<div class="row">
-				<div class="col-md-1">${product.name}</div>
-				<div class="col-md-1">${product.cost}</div>
-				<div class="col-md-1">${product.colour.name}</div>
-				<div class="col-md-2">${product.manufacturer.name}</div>
-				<div class="col-md-2">${product.subcategory.name}</div>
-				<div class="col-md-1">${product.country.name}</div>
-				
-				<div class="col-md-4">
-					<div class="col-md-2">
+			<div class="col-md-6">
+			<div><img class="img-thumbnail" width="300" src="/images/product/${product.id}${product.path}?version=${product.version}" /></div>
+				<div>Name:   		${product.name}</div>
+				<div>Cost:   		${product.cost}</div>
+				<div>Colour: 		${product.colour.name}</div>
+				<div>Manufacturer:	${product.manufacturer.name}</div>
+				<div>Subcategory:	${product.subcategory.name}</div>
+				<div>Country:		${product.country.name}</div>
+
+				<div>
+					<div>
 						<a href="/admin/product/delete/${product.id}<custom:allParams/>">delete</a>
-					</div>
-					<div class="col-md-2">
+					
 						<a href="/admin/product/update/${product.id}<custom:allParams/>">update</a>
 					</div>
-					<div class="col-md-8">
+					<div>
 						<form action="/admin/product/deliteSize/${product.id}"
 							method="post">
 							<table>
@@ -176,8 +165,7 @@
 											<c:forEach items="${product.sizes}" var="sizes">
 												<option value="${sizes.id}">${sizes.name}</option>
 											</c:forEach>
-									</select>
-									<input type="submit">
+									</select>Delite size <input type="submit">
 								</tr>
 							</table>
 						</form>
@@ -190,6 +178,9 @@
 				container="<ul class='pagination'></ul>" />
 		</div>
 	</div>
+	
+	
+	
 	<div class="col-md-2 col-xs-12">
 		<div class="col-md-6">
 			<div class="dropdown">
@@ -205,8 +196,7 @@
 						paramValue="subcategory.name" />
 					<custom:sort innerHtml="Subcategory name desc"
 						paramValue="subcategory.name,desc" />
-					<custom:sort innerHtml="Colour name asc"
-						paramValue="colour.name" />
+					<custom:sort innerHtml="Colour name asc" paramValue="colour.name" />
 					<custom:sort innerHtml="Colour name desc"
 						paramValue="colour.name,desc" />
 					<custom:sort innerHtml="Manufacturer name asc"
@@ -217,7 +207,7 @@
 			</div>
 		</div>
 		<div class="col-md-6">
-			<custom:size posibleSizes="1,2,5,20" size="${page.size}" title="Size" />
+			<custom:size posibleSizes="2,4,10,20" size="${page.size}" title="Size" />
 		</div>
 	</div>
 </body>

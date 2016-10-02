@@ -4,8 +4,44 @@
 	<div class="container">
 		<div class="row-fluid">
 			<a href="/">
-				<img class="img-thumbnail" width="80" src="/resources/image/a.jpg?version=1" />
+				<img class="img-thumbnail" width="80" src="/resources/image/b.jpg?version=1" />
 			</a>
 		</div>
 	</div>
-</header>
+</header> 
+<%-- <%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/security/tags"
+	prefix="security"%>
+
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/"><img class="img-thumbnail" width="80" src="/resources/image/a.jpg?version=1" /></a>
+    </div>
+    <ul class="nav navbar-nav">
+<!--       	<li><a>Home</a></li> -->
+<!--       	<li><a>Page 1</a></li> -->
+<!--       	<li><a>Page 2</a></li> -->
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+    <security:authentication property="principal.password"/>
+    	<li><a>${authUser.login}</a></li>
+    <security:authorize access="isAuthenticated()">
+			<li>
+				<form:form action="/logout" method="post"
+					class="navbar-form navbar-right">
+					<button type="submit" class="btn btn-default">Logout</button>
+				</form:form>
+			</li>
+		</security:authorize>
+		<security:authorize access="!isAuthenticated()">
+			<li>
+				<a class="btn btn-default" href="/login">Login</a>
+			</li>
+	</security:authorize>
+    </ul>
+  </div>
+</nav> --%>

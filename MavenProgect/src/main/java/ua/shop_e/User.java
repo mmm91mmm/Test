@@ -1,37 +1,34 @@
 package ua.shop_e;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Index;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
-@Table (indexes ={@Index(columnList ="login"), @Index(columnList ="mail")})
-public class User {
+public class User implements UserDetails{
 
-	
+	private static final long serialVersionUID = 5902478133304864638L;
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
-	
+
 	private String login;
-	
-	private String password;
 	
 	private String mail;
 	
-	@OneToMany(mappedBy="user")
-	private List <MyOrder> orders = new ArrayList<>();
-	
-	@ManyToOne(fetch=FetchType.LAZY)
+	private String password;
+	@Enumerated
 	private Role role;
 
 	public int getId() {
@@ -50,6 +47,14 @@ public class User {
 		this.login = login;
 	}
 
+	public String getMail() {
+		return mail;
+	}
+
+	public void setMail(String mail) {
+		this.mail = mail;
+	}
+	@Override
 	public String getPassword() {
 		return password;
 	}
@@ -58,20 +63,36 @@ public class User {
 		this.password = password;
 	}
 
-	public String getMail() {
-		return mail;
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+		authorities.add(new SimpleGrantedAuthority(role.name()));
+		return authorities;
 	}
 
-	public void setMail(String mail) {
-		this.mail = mail;
+	@Override
+	public String getUsername() {
+		return String.valueOf(id);
 	}
 
-	public List<MyOrder> getOrders() {
-		return orders;
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
 	}
 
-	public void setOrders(List<MyOrder> orders) {
-		this.orders = orders;
+	@Override
+	public boolean isAccountNonLocked() {
+		return true;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return true;
 	}
 
 	public Role getRole() {
@@ -80,6 +101,5 @@ public class User {
 
 	public void setRole(Role role) {
 		this.role = role;
-	}	
-	
+	}
 }

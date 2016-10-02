@@ -13,9 +13,9 @@ import org.springframework.transaction.annotation.Transactional;
 import ua.filterForm.ProductFilterForm;
 import ua.repository.ProductRepository;
 import ua.repository.SizeRepository;
+import ua.service.FileWriter;
 import ua.service.ProductService;
 import ua.shop_e.Product;
-import ua.shop_e.Size;
 import ua.specification.ProductFilterAdapter;
 	@Service
 	public class ProductServiceImpl implements ProductService {
@@ -24,6 +24,9 @@ import ua.specification.ProductFilterAdapter;
 	@Resource
 	private  ProductRepository  productRepository;
 		
+	@Autowired
+	private FileWriter fileWriter;
+	
 	@Autowired
 	private  SizeRepository  sizeRepository;
 	
@@ -88,9 +91,17 @@ import ua.specification.ProductFilterAdapter;
 		product.setManufacturer(form.getManufacturer());
 		product.setSubcategory(form.getSubcategory());
 		product.setId(form.getId());
-		product.setSizes(form.getSizes());
-		productRepository.save(product);
+		product.setPath(form.getPath());
+		product.setVersion(form.getVersion());
+		productRepository.saveAndFlush(product);
+		String extension = fileWriter.write(FileWriter.Folder.PRODUCT, form.getFile(), product.getId());
+		if(extension!=null){
+			product.setVersion(form.getVersion()+1);
+			product.setPath(extension);
+			productRepository.save(product);
+		}
 	}
+	
 
 	@Override
 	public Product findAllSizes(int id) {

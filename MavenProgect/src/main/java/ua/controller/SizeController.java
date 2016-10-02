@@ -18,10 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import ua.Validator.SizeValidator;
-import ua.filterForm.CountryFilterForm;
 import ua.filterForm.SizeFilterForm;
 import ua.service.SizeService;
-import ua.shop_e.Country;
 import ua.shop_e.Size;
 
 @Controller

@@ -6,7 +6,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import ua.filterForm.ProductFilterForm;
-import ua.shop_e.Manufacturer;
 import ua.shop_e.Product;
 
 public interface ProductService {

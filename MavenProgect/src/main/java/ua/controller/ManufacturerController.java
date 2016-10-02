@@ -18,10 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import ua.Validator.ManufacturerValidator;
-import ua.filterForm.CountryFilterForm;
 import ua.filterForm.ManufacturerFilterForm;
 import ua.service.ManufacturerService;
-import ua.shop_e.Country;
 import ua.shop_e.Manufacturer;
 
 @Controller

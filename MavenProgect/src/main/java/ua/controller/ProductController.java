@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import ua.Validator.ProductValidator;
 import ua.filterForm.ProductFilterForm;
-import ua.filterForm.SubcategoryFilterForm;
 import ua.service.ColourService;
 import ua.service.CountryService;
 import ua.service.ManufacturerService;
